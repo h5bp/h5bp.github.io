@@ -54,7 +54,6 @@
 
     $.getJSON("https://api.github.com/orgs/h5bp/repos?callback=?", function (result) {
         var repos = result.data;
-        console.log(repos);
         $(function () {
             $("#num-repos").text(repos.length);
 
