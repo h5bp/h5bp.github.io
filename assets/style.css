@@ -186,3 +186,24 @@ a.box:active {
     margin: 0 1px;
     background: #eee;
 }
+
+
+/* =============================================================================
+   Small screen adjustments
+   ========================================================================== */
+
+@media (max-width:960px) {
+
+    body {
+        max-width: 620px;
+    }
+
+}
+
+@media (max-width:640px) {
+
+    body {
+        max-width: 300px;
+    }
+
+}
