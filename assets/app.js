@@ -2,10 +2,10 @@
 
     // Put custom repo URL's in this object, keyed by repo name.
     var repoUrls = {
-        "html5-boilerplate": "http://html5boilerplate.com",
-        "mothereffinganimatedgif": "http://mothereffinganimatedgif.com",
-        "movethewebforward": "http://movethewebforward.org",
-        "html5please": "http://html5please.us"
+        "html5-boilerplate": "http://html5boilerplate.com/",
+        "mothereffinganimatedgif": "http://mothereffinganimatedgif.com/",
+        "movethewebforward": "http://movethewebforward.org/",
+        "html5please": "http://html5please.us/"
     };
 
     // Put custom repo descriptions in this object, keyed by repo name.
@@ -38,9 +38,9 @@
         var $link = $('<a class="box" href="' + getRepoUrl(repo) + '" />');
         var $facepile = $('<div class="repo__team" />');
 
-        $link.append($('<h2 class="repo__name">' + repo.name + '</h2>'));
-        $link.append($('<p class="repo__info">' + repo.watchers + ' watchers &middot; ' + repo.language + '</h3>'));
-        $link.append($('<p class="repo__desc">' + getRepoDesc(repo) + '</p>'));
+        $link.append('<h2 class="repo__name">' + repo.name + '</h2>');
+        $link.append('<p class="repo__info">' + repo.watchers + ' watchers &middot; ' + repo.language + '</p>');
+        $link.append('<p class="repo__desc">' + getRepoDesc(repo) + '</p>');
 
         $.getJSON("https://api.github.com/repos/h5bp/" + repo.name + "/collaborators?callback=?", function (result) {
             var collaborators = result.data;
