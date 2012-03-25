@@ -29,7 +29,7 @@
         item +=     ' &middot; <span class="time"><a href="' + repo.html_url + '/commits">' + prettyDate(repo.pushed_at) + '</a></span>';
         item += '</li>';
 
-        $(item).appendTo("#recently-updated-repos");
+        $(item).appendTo("#updated-repos");
     }
 
     // Create an entry for the repo in the grid of org repos
@@ -93,7 +93,7 @@
                 return 0;
             });
 
-            $.each(repos.slice(0, 5), function (i, repo) {
+            $.each(repos.slice(0, 3), function (i, repo) {
                 showRepoOverview(repo);
             });
         });
@@ -130,4 +130,23 @@
         }
         return 'A while ago';
     }
+
 })(jQuery);
+
+// External 3rd party scripts
+(function(doc, script) {
+    var t,
+        js,
+        fjs = doc.getElementsByTagName(script)[0],
+        add = function(url, id) {
+            var t;
+            if (doc.getElementById(id)) {return;}
+            js = doc.createElement(script);
+            js.src = url;
+            id && (js.id = id);
+            fjs.parentNode.insertBefore(js, fjs);
+        };
+
+    // Twitter SDK
+    add('http://platform.twitter.com/widgets.js', 'twitter-wjs');
+}(document, 'script'));
