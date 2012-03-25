@@ -2,8 +2,10 @@
 
     // Put custom repo URL's in this object, keyed by repo name.
     var repoUrls = {
-        "html5-boilerplate": "http://html5boilerplate.com/",
-        "html5please": "http://html5please.us/"
+        "html5-boilerplate": "http://html5boilerplate.com",
+        "mothereffinganimatedgif": "http://mothereffinganimatedgif.com",
+        "movethewebforward": "http://movethewebforward.org",
+        "html5please": "http://html5please.us"
     };
 
     // Put custom repo descriptions in this object, keyed by repo name.
