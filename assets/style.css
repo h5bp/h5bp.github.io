@@ -52,6 +52,7 @@ h1,
 h2,
 h3 {
     margin: 0 0 1em;
+    clear: left;
 }
 
 h1, .h1 {
@@ -182,6 +183,7 @@ a.box:active {
     margin: 20px -1px 0;
 }
 
+#all__members img,
 .repo__team img {
     float: left;
     width: 23px;
@@ -189,6 +191,13 @@ a.box:active {
     border: 1px solid #999;
     margin: 0 1px;
     background: #eee;
+}
+
+.currentMember {
+}
+
+.notSelectedMember {
+    opacity: 0.5;
 }
 
 
