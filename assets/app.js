@@ -41,7 +41,7 @@
         var $facepile = $('<div class="repo__team" />');
 
         $link.append('<h2 class="repo__name">' + repo.name + '</h2>');
-        $link.append('<p class="repo__info">' + repo.watchers + ' watchers &middot; ' + repo.language + '</p>');
+        $link.append('<p class="repo__info">' + repo.watchers + ' stargazers &middot; ' + repo.language + '</p>');
         $link.append('<p class="repo__desc">' + getRepoDesc(repo) + '</p>');
 
         $.getJSON('https://api.github.com/repos/' + orgName + '/' + repo.name + '/collaborators?callback=?', function (result) {
@@ -67,8 +67,8 @@
 
                 var weekHalfLife  = 1.146 * Math.pow(10, -9);
 
-                var pushDelta    = (new Date) - Date.parse(repo.pushed_at);
-                var createdDelta = (new Date) - Date.parse(repo.created_at);
+                var pushDelta    = (new Date()) - Date.parse(repo.pushed_at);
+                var createdDelta = (new Date()) - Date.parse(repo.created_at);
 
                 var weightForPush = 1;
                 var weightForWatchers = 1.314 * Math.pow(10, 7);
@@ -109,10 +109,10 @@
     });
 
     // Relative times
-    function prettyDate(date) {
+    function prettyDate(rawdate) {
         var date, seconds, formats, i = 0, f;
-        date = new Date(date);
-        seconds = (new Date - date) / 1000;
+        date = new Date(rawdate);
+        seconds = (new Date() - date) / 1000;
         formats = [
             [60, 'seconds', 1],
             [120, '1 minute ago'],
