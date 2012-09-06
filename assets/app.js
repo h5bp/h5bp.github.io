@@ -48,6 +48,7 @@
             var collaborators = result.data;
             $.each(collaborators, function (i, collaborator) {
                  $facepile.append($('<img src="' + collaborator.avatar_url + '" title="' + collaborator.login + '" alt="' + collaborator.login + '">'));
+                 $item.addClass('user-' + collaborator.id);
             });
         });
 
@@ -104,7 +105,51 @@
     $.getJSON('https://api.github.com/orgs/' + orgName + '/members?callback=?', function (result) {
         var members = result.data;
         $(function () {
-            $('#num-members').text(members.length);
+            var clickHandler,
+                allMembers = $('<div id="all__members" />'),
+                count = $('#num-members');
+
+            count.text(members.length);
+
+            clickHandler = function(e) {
+                e.preventDefault();
+
+                if ($(this).hasClass('currentMember')) {
+                    $('div.repo')
+                        .stop()
+                        .slideDown();
+
+                    allMembers.children()
+                        .removeClass('notSelectedMember currentMember');
+                    return;
+                }
+
+                $(this)
+                    .addClass('currentMember')
+                    .removeClass('notSelectedMember')
+                    .siblings()
+                        .addClass('notSelectedMember')
+                        .removeClass('currentMember');
+
+                $('div.repo')
+                    .stop()
+                    .slideUp();
+
+                $('div.repo.user-' + $(this).data('user-id'))
+                    .stop()
+                    .slideDown();
+
+            };
+            $.each(members, function (i, member) {
+                 $('<img src="' + member.avatar_url + '" data-user-id=' + member.id + ' title="' + member.login + '" alt="' + member.login + '">')
+                    .click(clickHandler)
+                    .appendTo(allMembers);
+
+                if (i === members.length -1) {
+                    allMembers.appendTo(count.parents('p'));
+                }
+            });
+
         });
     });
 
