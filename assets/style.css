@@ -191,6 +191,21 @@ a.box:active {
     background: #eee;
 }
 
+/* Footer
+   ========================================================================== */
+
+.site-footer {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    clear: both;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
 
 /* =============================================================================
    Small screen adjustments

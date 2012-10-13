@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     width="400px" height="400px" viewBox="0 0 400 400" enable-background="new 0 0 400 400" xml:space="preserve">
+
+    <!-- Background -->
+    <g id="background">
+        <rect fill="#222222" x="0" y="0" width="400" height="400"/>
+    </g>
+
+    <!-- 3d look -->
+    <g id="_3d-1">
+        <polygon fill="#304A51" points="100,322 135,339 217,282 187,260"/>
+    </g>
+    <g id="_3d-2">
+        <polygon fill="#466770" points="278,236 311,343 276,325 243,219"/>
+    </g>
+    <g id="_3d-3">
+        <polygon fill="#466770" points="223,156 251.125,156.125 221,72 186,55"/>
+    </g>
+    <g id="_3d-4">
+        <polygon fill="#304A51" points="243,219 328,156 363,174 278,236"/>
+    </g>
+
+    <!-- Star -->
+    <g id="star">
+        <polygon fill="#e08524" enable-background="new" points="187,260 100,322 131,219 45,156 151,156 186,55 223,156 328,156 243,219 276,325"/>
+        <path fill="#222222" d="M186,55l37,101h105l-85,63l33,106l-89-65l-87,62l31-103l-86-63h106L186,55 M186,37l-6,16l-34,97H45H26
+            l15,11l83,60l-30,99l-5,17l14-10l83-59l86,62l15,11l-5-17l-32-102l82-60l15-11h-18H227l-36-98L186,37L186,37z"/>
+    </g>
+</svg>
