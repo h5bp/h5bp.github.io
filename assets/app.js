@@ -56,7 +56,7 @@
         $item.appendTo('#repos');
     }
 
-    $.getJSON('https://api.github.com/orgs/' + orgName + '/repos?callback=?', function (result) {
+    $.getJSON('https://api.github.com/orgs/' + orgName + '/repos?callback=h5bp', function (result) {
         var repos = result.data;
         $(function () {
             $('#num-repos').text(repos.length);
