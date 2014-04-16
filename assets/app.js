@@ -2,31 +2,20 @@
 
     var orgName = 'h5bp';
 
-    // Put custom repo URL's in this object, keyed by repo name.
-    var repoUrls = {
-        'html5-boilerplate': 'http://html5boilerplate.com/',
-        'mothereffinganimatedgif': 'http://mothereffinganimatedgif.com/',
-        'movethewebforward': 'http://movethewebforward.org/',
-        'html5please': 'http://html5please.us/'
-    };
-
-    // Put custom repo descriptions in this object, keyed by repo name.
-    var repoDescriptions = {};
-
     // Return the repo url
     function getRepoUrl(repo) {
-        return repoUrls[repo.name] || repo.html_url;
+        return repo.homepage || repo.html_url;
     }
 
     // Return the repo description
     function getRepoDesc(repo) {
-        return repoDescriptions[repo.name] || repo.description;
+        return repo.description;
     }
 
     // Display a repo's overview (for recent updates section)
     function showRepoOverview(repo) {
         var item;
-        item  = '<li>';
+        item = '<li>';
         item +=     '<span class="name"><a href="' + repo.html_url + '">' + repo.name + '</a></span>';
         item +=     ' &middot; <span class="time"><a href="' + repo.html_url + '/commits">' + prettyDate(repo.pushed_at) + '</a></span>';
         item += '</li>';
@@ -41,7 +30,7 @@
         var $facepile = $('<div class="repo__team" />');
 
         $link.append('<h2 class="repo__name">' + repo.name + '</h2>');
-        $link.append('<p class="repo__info">' + repo.watchers + ' stargazers &middot; ' + repo.language + '</p>');
+        $link.append('<p class="repo__info">' + repo.watchers + ' stargazers ' + (repo.language !== null ? '&middot; ' + repo.language : '') + '</p>');
         $link.append('<p class="repo__desc">' + getRepoDesc(repo) + '</p>');
 
         $.getJSON('https://api.github.com/repos/' + orgName + '/' + repo.name + '/collaborators?callback=?', function (result) {
