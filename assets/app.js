@@ -36,7 +36,9 @@
         $.getJSON('https://api.github.com/repos/' + orgName + '/' + repo.name + '/collaborators?callback=?', function (result) {
             var collaborators = result.data;
             $.each(collaborators, function (i, collaborator) {
-                 $facepile.append($('<img src="' + collaborator.avatar_url + '" title="' + collaborator.login + '" alt="' + collaborator.login + '">'));
+                if(collaborator.login !== 'h5bp-bot') {
+                    $facepile.append($('<img src="' + collaborator.avatar_url + '" title="' + collaborator.login + '" alt="' + collaborator.login + '">'));
+                }
             });
         });
 
