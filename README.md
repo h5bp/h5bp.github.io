@@ -1,4 +1,4 @@
-# h5bp.github.com
+# h5bp.github.io
 
 Display for all the H5BP projects.
 
