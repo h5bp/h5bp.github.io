@@ -37,7 +37,7 @@
             var collaborators = result.data;
             $.each(collaborators, function (i, collaborator) {
                 if(collaborator.login !== 'h5bp-bot') {
-                    $facepile.append($('<img src="' + collaborator.avatar_url + '" title="' + collaborator.login + '" alt="' + collaborator.login + '">'));
+                    $facepile.append($('<img src="' + collaborator.avatar_url + '&s=30' + '" title="' + collaborator.login + '" alt="' + collaborator.login + '">'));
                 }
             });
         });
