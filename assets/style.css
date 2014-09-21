@@ -54,16 +54,16 @@ h3 {
     margin: 0 0 1em;
 }
 
-h1, .h1 {
+h1 {
     margin: 0 0 0.25em;
     font-size: 3em;
 }
 
-h2, .h2 {
+h2 {
     font-size: 1.25em;
 }
 
-h3, .h3 {
+h3 {
     font-size: 1.125em;
     color: #777;
 }
@@ -75,8 +75,7 @@ p {
 /* Lists
    ========================================================================== */
 
-ol,
-ul {
+ol {
     list-style: none;
     padding: 0;
     margin: 0;
