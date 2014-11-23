@@ -27,22 +27,11 @@
     function showRepo(repo) {
         var $item = $('<div class="unit-1-3 repo" />');
         var $link = $('<a class="box" href="' + getRepoUrl(repo) + '" />');
-        var $facepile = $('<div class="repo__team" />');
 
         $link.append('<h2 class="repo__name">' + repo.name + '</h2>');
         $link.append('<p class="repo__info">' + repo.watchers + ' stargazers ' + (repo.language !== null ? '&middot; ' + repo.language : '') + '</p>');
         $link.append('<p class="repo__desc">' + getRepoDesc(repo) + '</p>');
 
-        $.getJSON('https://api.github.com/repos/' + orgName + '/' + repo.name + '/collaborators?callback=?', function (result) {
-            var collaborators = result.data;
-            $.each(collaborators, function (i, collaborator) {
-                if(collaborator.login !== 'h5bp-bot') {
-                    $facepile.append($('<img src="' + collaborator.avatar_url + '&amp;s=50' + '" title="' + collaborator.login + '" alt="' + collaborator.login + '">'));
-                }
-            });
-        });
-
-        $facepile.appendTo($link);
         $link.appendTo($item);
         $item.appendTo('#repos');
     }
