@@ -81,7 +81,7 @@
         });
     });
 
-    $.getJSON('https://api.github.com/orgs/' + orgName + '/members?callback=?', function (result) {
+    $.getJSON('https://api.github.com/orgs/' + orgName + '/members?per_page=100&callback=?', function (result) {
         var members = result.data;
         $(function () {
             $('#num-members').text(members.length);
