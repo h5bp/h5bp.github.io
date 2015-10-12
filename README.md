@@ -1,5 +1,5 @@
-# h5bp.github.io
+# Github Training module
 
-Display for all the H5BP projects.
+Module to be used for training Github.
 
-Adapted from [twitter.github.com](https://github.com/twitter/twitter.github.com).
+
