@@ -17,7 +17,7 @@
         var item;
         item = '<li>';
         item +=     '<span class="name"><a href="' + repo.html_url + '">' + repo.name + '</a></span>';
-        item +=     ' &middot; <span class="time"><a href="' + repo.html_url + '/commits">' + prettyDate(repo.pushed_at) + '</a></span>';
+        item +=     ' &middot; <span class="time"><a href="' + repo.html_url + '/commits">' + html5prettyDate(repo.pushed_at) + '</a></span>';
         item += '</li>';
 
         $(item).appendTo("#updated-repos");
@@ -111,6 +111,11 @@
             }
         }
         return 'A while ago';
+    }
+    
+    // Wraps prettyDate in an HTML5 <time> element
+    function html5prettyDate(rawdate) {
+        return '<time datetime="' + rawdate.toISOString() + '">' + prettyDate(rawdate) + '</time>';
     }
 
 })(jQuery);
