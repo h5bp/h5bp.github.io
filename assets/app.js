@@ -128,5 +128,5 @@
         };
 
     // Twitter SDK
-    add('//platform.twitter.com/widgets.js', 'twitter-wjs');
+    add('https://platform.twitter.com/widgets.js', 'twitter-wjs');
 }(document, 'script'));
