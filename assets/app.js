@@ -1,6 +1,7 @@
 (function ($, undefined) {
 
     var orgName = 'h5bp';
+    let stars = 0;
 
     // Return the repo url
     function getRepoUrl(repo) {
@@ -38,6 +39,7 @@
 
     $.getJSON('https://api.github.com/orgs/' + orgName + '/repos?callback=?', function (result) {
         var repos = result.data;
+
         $(function () {
             $('#num-repos').text(repos.length);
 
@@ -65,9 +67,14 @@
             });
 
             $.each(repos, function (i, repo) {
-                showRepo(repo);
-            });
+              stars += repo.stargazers_count;
 
+              if (repo.archived === false){
+                console.log(false)
+                showRepo(repo);
+              }
+            });
+            $("#num-stargazers").text(stars.toLocaleString());
             // Sort by most-recently pushed to.
             repos.sort(function (a, b) {
                 if (a.pushed_at < b.pushed_at) return 1;
@@ -112,7 +119,7 @@
         }
         return 'A while ago';
     }
-    
+
     // Wraps prettyDate in an HTML5 <time> element
     function html5prettyDate(rawdate) {
         return '<time datetime="' + rawdate.toISOString() + '">' + prettyDate(rawdate) + '</time>';
