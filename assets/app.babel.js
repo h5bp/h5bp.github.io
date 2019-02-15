@@ -1,6 +1,6 @@
 (function ($, undefined) {
 
-  let orgName = 'h5bp';
+  const orgName = 'h5bp';
   let stars = 0;
 
   // Return the repo url
@@ -16,78 +16,88 @@
   // Display a repo's overview (for recent updates section)
   function showRepoOverview(repo) {
     let item;
-    item = '<li>';
-    item +=   '<span class="name"><a href="' + repo.html_url + '">' + repo.name + '</a></span>';
-    item +=   ' &middot; <span class="time"><a href="' + repo.html_url + '/commits">' + html5prettyDate(repo.pushed_at) + '</a></span>';
-    item += '</li>';
-
+    item = `
+    <li>
+      <span class="name"><a href="${repo.html_url}">${repo.name}</a></span>
+      &middot;
+      <span class="time"><a href="${repo.html_url}/commits">${html5prettyDate(repo.pushed_at)}</a></span>
+    </li>`;
     $(item).appendTo("#updated-repos");
   }
 
   // Create an entry for the repo in the grid of org repos
   function showRepo(repo) {
-    let $item = $('<div class="unit-1-3 repo" />');
-    let $link = $('<a class="box" href="' + getRepoUrl(repo) + '" />');
+    const url = getRepoUrl(repo);
+    const language = repo.language !== null ? `&middot;${repo.language}` : '';
 
-    $link.append('<h2 class="repo__name">' + repo.name + '</h2>');
-    $link.append('<p class="repo__info">' + repo.watchers + ' stargazers ' + (repo.language !== null ? '&middot; ' + repo.language : '') + '</p>');
-    $link.append('<p class="repo__desc">' + getRepoDesc(repo) + '</p>');
-
-    $link.appendTo($item);
+    let $item = $(
+      `<div class="unit-1-3 repo=">
+        <div class="box">
+        <h2 class="repo__name">${repo.name}</h2>
+        <p class="repo__info">${repo.watchers} stargazers ${language}</p>
+        <p class="repo__desc">${getRepoDesc(repo)}</p>
+        </div>
+        </div>`
+    );
+    $item.on("click",()=> window.location = url)
     $item.appendTo('#repos');
   }
 
-  $.getJSON('https://api.github.com/orgs/' + orgName + '/repos?callback=?', (result) => {
+  $.getJSON(`https://api.github.com/orgs/${orgName}/repos?callback=?`, (result) => {
     let repos = result.data;
+    const len = repos.length;
+    $('#num-repos').text(len);
+    console.log(result)
+    for (let repo of repos) {
+      console.log(repo)
+      repo.pushed_at = new Date(repo.pushed_at);
 
-    $(() => {
-      $('#num-repos').text(repos.length);
+      let weekHalfLife = 1.146 * Math.pow(10, -9);
 
-      // Convert pushed_at to Date.
-      $.each(repos, function (i, repo) {
-        repo.pushed_at = new Date(repo.pushed_at);
+      let pushDelta  = (new Date()) - Date.parse(repo.pushed_at);
+      let createdDelta = (new Date()) - Date.parse(repo.created_at);
 
-        let weekHalfLife = 1.146 * Math.pow(10, -9);
+      let weightForPush = 1;
+      let weightForWatchers = 1.314 * Math.pow(10, 7);
 
-        let pushDelta  = (new Date()) - Date.parse(repo.pushed_at);
-        let createdDelta = (new Date()) - Date.parse(repo.created_at);
+      repo.hotness = weightForPush * Math.pow(Math.E, -1 * weekHalfLife * pushDelta);
+      repo.hotness += weightForWatchers * repo.watchers / createdDelta;
 
-        let weightForPush = 1;
-        let weightForWatchers = 1.314 * Math.pow(10, 7);
+    }
+    repos.sort(function (a, b) {
+      if (a.hotness < b.hotness) return 1;
+      if (b.hotness < a.hotness) return -1;
+      return 0;
+    });
 
-        repo.hotness = weightForPush * Math.pow(Math.E, -1 * weekHalfLife * pushDelta);
-        repo.hotness += weightForWatchers * repo.watchers / createdDelta;
-      });
+    for (let repo of repos) {
+      stars += repo.stargazers_count;
 
-      // Sort by hotness.
-      repos.sort(function (a, b) {
-        if (a.hotness < b.hotness) return 1;
-        if (b.hotness < a.hotness) return -1;
+      if (repo.archived === false) {
+        showRepo(repo);
+      }
+    }
+    $("#num-stargazers").text(stars.toLocaleString());
+    // Sort by most-recently pushed to.
+    repos.sort(function (a, b) {
+      if (a.pushed_at < b.pushed_at) {
+        return 1;
+      }
+      else if (b.pushed_at < a.pushed_at) {
+        return -1;
+      }
+      else {
         return 0;
-      });
+      }
 
-      $.each(repos, function (i, repo) {
-        stars += repo.stargazers_count;
+    });
 
-        if (repo.archived === false) {
-          showRepo(repo);
-        }
-      });
-      $("#num-stargazers").text(stars.toLocaleString());
-      // Sort by most-recently pushed to.
-      repos.sort(function (a, b) {
-        if (a.pushed_at < b.pushed_at) return 1;
-        if (b.pushed_at < a.pushed_at) return -1;
-        return 0;
-      });
-
-      $.each(repos.slice(0, 3), function (i, repo) {
-        showRepoOverview(repo);
-      });
+    $.each(repos.slice(0, 3), function (i, repo) {
+      showRepoOverview(repo);
     });
   });
 
-  $.getJSON('https://api.github.com/orgs/' + orgName + '/members?per_page=100&callback=?', function (result) {
+  $.getJSON(`https://api.github.com/orgs/${orgName}/members?per_page=100&callback=?`, function (result) {
     let members = result.data;
     $(function () {
       $('#num-members').text(members.length);

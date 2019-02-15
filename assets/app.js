@@ -16,30 +16,34 @@
 
   function showRepoOverview(repo) {
     var item;
-    item = '<li>';
-    item += '<span class="name"><a href="' + repo.html_url + '">' + repo.name + '</a></span>';
-    item += ' &middot; <span class="time"><a href="' + repo.html_url + '/commits">' + html5prettyDate(repo.pushed_at) + '</a></span>';
-    item += '</li>';
+    item = "\n    <li>\n      <span class=\"name\"><a href=\"".concat(repo.html_url, "\">").concat(repo.name, "</a></span>\n      &middot;\n      <span class=\"time\"><a href=\"").concat(repo.html_url, "/commits\">").concat(html5prettyDate(repo.pushed_at), "</a></span>\n    </li>");
     $(item).appendTo("#updated-repos");
   } // Create an entry for the repo in the grid of org repos
 
 
   function showRepo(repo) {
-    var $item = $('<div class="unit-1-3 repo" />');
-    var $link = $('<a class="box" href="' + getRepoUrl(repo) + '" />');
-    $link.append('<h2 class="repo__name">' + repo.name + '</h2>');
-    $link.append('<p class="repo__info">' + repo.watchers + ' stargazers ' + (repo.language !== null ? '&middot; ' + repo.language : '') + '</p>');
-    $link.append('<p class="repo__desc">' + getRepoDesc(repo) + '</p>');
-    $link.appendTo($item);
+    var url = getRepoUrl(repo);
+    var language = repo.language !== null ? "&middot;".concat(repo.language) : '';
+    var $item = $("<div class=\"unit-1-3 repo=\">\n        <div class=\"box\">\n        <h2 class=\"repo__name\">".concat(repo.name, "</h2>\n        <p class=\"repo__info\">").concat(repo.watchers, " stargazers ").concat(language, "</p>\n        <p class=\"repo__desc\">").concat(getRepoDesc(repo), "</p>\n        </div>\n        </div>"));
+    $item.on("click", function () {
+      return window.location = url;
+    });
     $item.appendTo('#repos');
   }
 
-  $.getJSON('https://api.github.com/orgs/' + orgName + '/repos?callback=?', function (result) {
+  $.getJSON("https://api.github.com/orgs/".concat(orgName, "/repos?callback=?"), function (result) {
     var repos = result.data;
-    $(function () {
-      $('#num-repos').text(repos.length); // Convert pushed_at to Date.
+    var len = repos.length;
+    $('#num-repos').text(len);
+    console.log(result);
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
-      $.each(repos, function (i, repo) {
+    try {
+      for (var _iterator = repos[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var repo = _step.value;
+        console.log(repo);
         repo.pushed_at = new Date(repo.pushed_at);
         var weekHalfLife = 1.146 * Math.pow(10, -9);
         var pushDelta = new Date() - Date.parse(repo.pushed_at);
@@ -48,34 +52,71 @@
         var weightForWatchers = 1.314 * Math.pow(10, 7);
         repo.hotness = weightForPush * Math.pow(Math.E, -1 * weekHalfLife * pushDelta);
         repo.hotness += weightForWatchers * repo.watchers / createdDelta;
-      }); // Sort by hotness.
-
-      repos.sort(function (a, b) {
-        if (a.hotness < b.hotness) return 1;
-        if (b.hotness < a.hotness) return -1;
-        return 0;
-      });
-      $.each(repos, function (i, repo) {
-        stars += repo.stargazers_count;
-
-        if (repo.archived === false) {
-          console.log(false);
-          showRepo(repo);
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return != null) {
+          _iterator.return();
         }
-      });
-      $("#num-stargazers").text(stars.toLocaleString()); // Sort by most-recently pushed to.
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
 
-      repos.sort(function (a, b) {
-        if (a.pushed_at < b.pushed_at) return 1;
-        if (b.pushed_at < a.pushed_at) return -1;
+    repos.sort(function (a, b) {
+      if (a.hotness < b.hotness) return 1;
+      if (b.hotness < a.hotness) return -1;
+      return 0;
+    });
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = repos[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var _repo = _step2.value;
+        stars += _repo.stargazers_count;
+
+        if (_repo.archived === false) {
+          showRepo(_repo);
+        }
+      }
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+          _iterator2.return();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
+      }
+    }
+
+    $("#num-stargazers").text(stars.toLocaleString()); // Sort by most-recently pushed to.
+
+    repos.sort(function (a, b) {
+      if (a.pushed_at < b.pushed_at) {
+        return 1;
+      } else if (b.pushed_at < a.pushed_at) {
+        return -1;
+      } else {
         return 0;
-      });
-      $.each(repos.slice(0, 3), function (i, repo) {
-        showRepoOverview(repo);
-      });
+      }
+    });
+    $.each(repos.slice(0, 3), function (i, repo) {
+      showRepoOverview(repo);
     });
   });
-  $.getJSON('https://api.github.com/orgs/' + orgName + '/members?per_page=100&callback=?', function (result) {
+  $.getJSON("https://api.github.com/orgs/".concat(orgName, "/members?per_page=100&callback=?"), function (result) {
     var members = result.data;
     $(function () {
       $('#num-members').text(members.length);
