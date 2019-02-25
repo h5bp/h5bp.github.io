@@ -148,12 +148,12 @@ ol {
 }
 
 .stats {
-  margin: 0 0 2em;
+  margin: 0 0 1rem;
   font-size: 1.125em;
 }
 
-.twitter-share-button {
-  margin-top: 30px;
+.tweeter {
+  margin-top: 1.5rem;
 }
 
 /* Content
