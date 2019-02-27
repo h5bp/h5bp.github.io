@@ -9,10 +9,11 @@ html {
 }
 
 body {
-  max-width: 940px;
+  max-width: 960px;
   padding: 20px 10px;
   margin: 0 auto;
   background: #f5f5f5;
+  box-sizing: border-box;
 }
 
 img {
@@ -109,7 +110,7 @@ ol {
 
 /* Box
    ========================================================================== */
-
+.header-box,
 .box {
   display: block;
   overflow: hidden;
@@ -119,11 +120,16 @@ ol {
   border-radius: 4px;
   text-decoration: none;
   background: #fff;
+  cursor: pointer;
+}
+.header-box h2,
+.box h2 {
+  color: #0084b4;
 }
 
-a.box:hover,
-a.box:focus,
-a.box:active {
+.box:hover,
+.box:focus,
+.box:active {
   padding: 12px;
   border-width: 4px;
   border-color: #005e80;
@@ -143,16 +149,19 @@ a.box:active {
 }
 
 .stats {
-  margin: 0 0 2em;
+  margin: 0 0 1rem;
   font-size: 1.125em;
 }
 
-.twitter-share-button {
-  margin-top: 30px;
+.tweeter {
+  margin-top: 1.5rem;
 }
 
 /* Content
    ========================================================================== */
+.repo {
+  cursor: pointer;
+}
 
 .repo__name {
   margin: 0 0 0.1em;
