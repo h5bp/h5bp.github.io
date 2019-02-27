@@ -15,8 +15,7 @@
 
   // Display a repo's overview (for recent updates section)
   function showRepoOverview(repo) {
-    let item;
-    item = `
+    let item = `
     <li>
       <span class="name"><a href="${repo.html_url}">${repo.name}</a></span>
       &middot;
@@ -30,7 +29,7 @@
     const url = getRepoUrl(repo);
     const language = repo.language !== null ? `&middot;${repo.language}` : '';
 
-    let $item = $(
+    const $item = $(
       `<div class="unit-1-3 repo=">
         <div class="box">
         <h2 class="repo__name">${repo.name}</h2>
@@ -45,11 +44,8 @@
 
   $.getJSON(`https://api.github.com/orgs/${orgName}/repos?callback=?`, (result) => {
     let repos = result.data;
-    const len = repos.length;
-    $('#num-repos').text(len);
-    console.log(result)
+    $('#num-repos').text(repos.length);
     for (let repo of repos) {
-      console.log(repo)
       repo.pushed_at = new Date(repo.pushed_at);
 
       let weekHalfLife = 1.146 * Math.pow(10, -9);

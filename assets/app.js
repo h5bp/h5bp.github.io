@@ -15,8 +15,7 @@
 
 
   function showRepoOverview(repo) {
-    var item;
-    item = "\n    <li>\n      <span class=\"name\"><a href=\"".concat(repo.html_url, "\">").concat(repo.name, "</a></span>\n      &middot;\n      <span class=\"time\"><a href=\"").concat(repo.html_url, "/commits\">").concat(html5prettyDate(repo.pushed_at), "</a></span>\n    </li>");
+    var item = "\n    <li>\n      <span class=\"name\"><a href=\"".concat(repo.html_url, "\">").concat(repo.name, "</a></span>\n      &middot;\n      <span class=\"time\"><a href=\"").concat(repo.html_url, "/commits\">").concat(html5prettyDate(repo.pushed_at), "</a></span>\n    </li>");
     $(item).appendTo("#updated-repos");
   } // Create an entry for the repo in the grid of org repos
 
@@ -33,9 +32,7 @@
 
   $.getJSON("https://api.github.com/orgs/".concat(orgName, "/repos?callback=?"), function (result) {
     var repos = result.data;
-    var len = repos.length;
-    $('#num-repos').text(len);
-    console.log(result);
+    $('#num-repos').text(repos.length);
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -43,7 +40,6 @@
     try {
       for (var _iterator = repos[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var repo = _step.value;
-        console.log(repo);
         repo.pushed_at = new Date(repo.pushed_at);
         var weekHalfLife = 1.146 * Math.pow(10, -9);
         var pushDelta = new Date() - Date.parse(repo.pushed_at);

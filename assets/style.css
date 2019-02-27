@@ -110,7 +110,7 @@ ol {
 
 /* Box
    ========================================================================== */
-
+.header-box,
 .box {
   display: block;
   overflow: hidden;
@@ -122,6 +122,7 @@ ol {
   background: #fff;
   cursor: pointer;
 }
+.header-box h2,
 .box h2 {
   color: #0084b4;
 }
