@@ -1,29 +1,30 @@
 {
-  "engines": {
-    "node": ">=8",
-    "npm": ">=3"
+  "name": "h5bp.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Home page for the h5bp gitHub organization.",
+  "homepage": "https://h5bp.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h5bp/h5bp.github.io.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "babel": "babel ./assets/app.babel.js --watch --out-file ./assets/app.js"
   },
   "babel": {
     "presets": [
       "@babel/preset-env"
     ]
   },
-  "scripts": {
-    "babel": "babel ./assets/app.babel.js --watch --out-file ./assets/app.js"
-  },
-  "homepage": "https://h5bp.org/",
-  "license": "MIT",
-  "name": "h5bp.github.io",
-  "version": "1.0.0",
-  "description": "Home page for the h5bp gitHub organization.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/h5bp/h5bp.github.io.git"
-  },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "babel-preset-env": "^1.7.0"
+  },
+  "engines": {
+    "node": ">=8",
+    "npm": ">=3"
   }
 }
