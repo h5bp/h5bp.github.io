@@ -28,6 +28,12 @@
   function showRepo(repo) {
     const url = getRepoUrl(repo);
     const language = repo.language !== null ? `&middot;${repo.language}` : '';
+    
+    // Create links for GitHub repo and homepage
+    const githubLink = `<a href="${repo.html_url}" class="repo__link repo__link--github" title="View source code">GitHub</a>`;
+    const homepageLink = repo.homepage ? 
+      `<a href="${repo.homepage}" class="repo__link repo__link--homepage" title="Visit project homepage">Homepage</a>` : '';
+    const linksHtml = `<div class="repo__links">${githubLink}${homepageLink}</div>`;
 
     const $item = $(
       `<div class="unit-1-3 repo=">
@@ -35,10 +41,16 @@
         <h2 class="repo__name">${repo.name}</h2>
         <p class="repo__info">${repo.watchers} stargazers ${language}</p>
         <p class="repo__desc">${getRepoDesc(repo)}</p>
+        ${linksHtml}
         </div>
         </div>`
     );
-    $item.on("click",()=> window.location = url)
+    $item.on("click", (e) => {
+      // Don't navigate if clicking on a link
+      if (!$(e.target).hasClass('repo__link')) {
+        window.location = url;
+      }
+    });
     $item.appendTo('#repos');
   }
 
