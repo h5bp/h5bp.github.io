@@ -180,6 +180,42 @@ ol {
   color: #666;
 }
 
+.repo__links {
+  margin-top: 1em;
+  padding-top: 0.75em;
+  border-top: 1px solid #eee;
+}
+
+.repo__link {
+  display: inline-block;
+  margin-right: 0.75em;
+  padding: 0.25em 0.5em;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #0084b4;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.repo__link:hover,
+.repo__link:focus {
+  background-color: #005e80;
+  color: #fff;
+  text-decoration: none;
+}
+
+.repo__link--homepage {
+  background-color: #5cb85c;
+}
+
+.repo__link--homepage:hover,
+.repo__link--homepage:focus {
+  background-color: #449d44;
+}
+
 /* Footer
    ========================================================================== */
 

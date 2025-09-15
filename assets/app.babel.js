@@ -28,6 +28,12 @@
   function showRepo(repo) {
     const url = getRepoUrl(repo);
     const language = repo.language !== null ? `&middot;${repo.language}` : '';
+    
+    // Create links for GitHub repo and homepage
+    const githubLink = `<a href="${repo.html_url}" class="repo__link repo__link--github" title="View source code">GitHub</a>`;
+    const homepageLink = repo.homepage ? 
+      `<a href="${repo.homepage}" class="repo__link repo__link--homepage" title="Visit project homepage">Homepage</a>` : '';
+    const linksHtml = `<div class="repo__links">${githubLink}${homepageLink}</div>`;
 
     const $item = $(
       `<div class="unit-1-3 repo=">
@@ -35,10 +41,16 @@
         <h2 class="repo__name">${repo.name}</h2>
         <p class="repo__info">${repo.watchers} stargazers ${language}</p>
         <p class="repo__desc">${getRepoDesc(repo)}</p>
+        ${linksHtml}
         </div>
         </div>`
     );
-    $item.on("click",()=> window.location = url)
+    $item.on("click", (e) => {
+      // Don't navigate if clicking on a link
+      if (!$(e.target).hasClass('repo__link')) {
+        window.location = url;
+      }
+    });
     $item.appendTo('#repos');
   }
 
@@ -60,7 +72,7 @@
       repo.hotness += weightForWatchers * repo.watchers / createdDelta;
 
     }
-    repos.sort(function (a, b) {
+    repos.sort((a, b) => {
       if (a.hotness < b.hotness) return 1;
       if (b.hotness < a.hotness) return -1;
       return 0;
@@ -75,7 +87,7 @@
     }
     $("#num-stargazers").text(stars.toLocaleString());
     // Sort by most-recently pushed to.
-    repos.sort(function (a, b) {
+    repos.sort((a, b) => {
       if (a.pushed_at < b.pushed_at) {
         return 1;
       }
@@ -88,14 +100,14 @@
 
     });
 
-    $.each(repos.slice(0, 3), function (i, repo) {
+    $.each(repos.slice(0, 3), (i, repo) => {
       showRepoOverview(repo);
     });
   });
 
-  $.getJSON(`https://api.github.com/orgs/${orgName}/members?per_page=100&callback=?`, function (result) {
+  $.getJSON(`https://api.github.com/orgs/${orgName}/members?per_page=100&callback=?`, (result) => {
     let members = result.data;
-    $(function () {
+    $(() => {
       $('#num-members').text(members.length);
     });
   });
@@ -127,16 +139,16 @@
 
   // Wraps prettyDate in an HTML5 <time> element
   function html5prettyDate(rawdate) {
-    return '<time datetime="' + rawdate.toISOString() + '">' + prettyDate(rawdate) + '</time>';
+    return `<time datetime="${rawdate.toISOString()}">${prettyDate(rawdate)}</time>`;
   }
 
 })(jQuery);
 
 // External 3rd party scripts
-(function(doc, script) {
+((doc, script) => {
   let js,
     fjs = doc.getElementsByTagName(script)[0],
-    add = function(url, id) {
+    add = (url, id) => {
       if (doc.getElementById(id)) {return;}
       js = doc.createElement(script);
       js.src = url;
@@ -146,4 +158,4 @@
 
   // Twitter SDK
   add('https://platform.twitter.com/widgets.js', 'twitter-wjs');
-}(document, 'script'));
+})(document, 'script');
