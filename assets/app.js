@@ -125,7 +125,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
   // Wraps prettyDate in an HTML5 <time> element
   function html5prettyDate(rawdate) {
-    return '<time datetime="' + rawdate.toISOString() + '">' + prettyDate(rawdate) + '</time>';
+    return "<time datetime=\"".concat(rawdate.toISOString(), "\">").concat(prettyDate(rawdate), "</time>");
   }
 })(jQuery);
 
